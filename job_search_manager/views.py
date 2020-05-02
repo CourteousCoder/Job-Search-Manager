@@ -1,5 +1,6 @@
 from django.shortcuts import redirect
+from django.urls import reverse
 
 
 def landing(request):
-    return redirect('/jobs')
+    return redirect(reverse('contacts:index'))

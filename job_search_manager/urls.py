@@ -19,8 +19,8 @@ from . import views
 
 urlpatterns = [
     path('', views.landing, name='landing'),
-    path('contacts/', include('contacts.urls')),
-    path('jobs/', include('jobs.urls')),
-    path('resumes/', include('resumes.urls')),
+    path('contacts/', include('contacts.urls', namespace='contacts')),
+    path('jobs/', include('jobs.urls', namespace='jobs')),
+    path('resumes/', include('resumes.urls', namespace='resumes')),
     path('admin/', admin.site.urls),
 ]

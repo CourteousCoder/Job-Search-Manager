@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}
+    Contacts Listing | {{ block.super }}
+{% endblock %}
+{% block content %}
+    <h2>Contacts</h2>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Company</th>
+            <th>Last Interaction</th>
+            <th>Next Follow-Up</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for contact in contacts_list %}
+            <tr>
+                <td>{{ contact.name }}</td>
+                <td>{{ contact.company }}</td>
+                <td>{{ contact.last_interaction | date:'c' }}</td>
+                <td>{{ contact.next_follow_up | date:'c' }}</td>
+            <tr/>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

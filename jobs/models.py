@@ -13,6 +13,7 @@ class Job(models.Model):
     REJECTED = 'REJ'
 
     company = models.ForeignKey('contacts.Company', on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
     description = models.TextField()
     status = models.CharField(max_length=3, choices=[
         (NEW, 'New Opportunity'),
@@ -29,3 +30,8 @@ class Job(models.Model):
             self.STOPPED_PURSUING,
             self.REJECTED,
         )
+
+    def __str__(self):
+        title = self.title
+        company = self.company
+        return f'{title} @ {company}'

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}
+    Contact Listing | {{ block.super }}
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h2>Contacts</h2>
+        </div>
+        <div class="">
+            <a href="{% url 'contacts:person_create' %}" class="btn btn-success">New Contact</a>
+        </div>
+    </div>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Company</th>
+            <th>Interactions</th>
+            <th>Last Interaction</th>
+            <th>Next Follow-Up</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for person in person_list %}
+            <tr>
+                <td>{{ person.name }}</td>
+                <td>{{ person.company }}</td>
+                <td>{{ person.interaction_set.all | length }}</td>
+                <td>{{ person.last_interaction.created_at | date:'r' }}</td>
+                <td>{{ person.last_interaction.follow_up_at | date:'r' }}</td>
+            <tr/>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

@@ -14,7 +14,7 @@ class Company(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        type = self.type
+        type = self.get_type_display()
         name = self.name
         return f'{name} ({type})'
 
@@ -31,6 +31,10 @@ class Person(models.Model):
     linked_in_profile = models.URLField(null=True, verbose_name='LinkedIn profile URL')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    @property
+    def last_interaction(self):
+        return self.interaction_set.latest()
 
     def __str__(self):
         name = self.name
@@ -61,3 +65,6 @@ class Interaction(models.Model):
             return f'{time} - {job}'
         else:
             return f'{time} (orphaned)'
+
+    class Meta:
+        get_latest_by = 'created_at'

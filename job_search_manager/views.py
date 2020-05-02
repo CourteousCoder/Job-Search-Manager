@@ -3,4 +3,4 @@ from django.urls import reverse
 
 
 def landing(request):
-    return redirect(reverse('contacts:index'))
+    return redirect(reverse('contacts:person_list'))

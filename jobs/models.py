@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Job(models.Model):
@@ -30,6 +31,9 @@ class Job(models.Model):
             self.STOPPED_PURSUING,
             self.REJECTED,
         )
+
+    def get_absolute_url(self):
+        return reverse('jobs:job_detail', kwargs=dict(pk=self.pk))
 
     def __str__(self):
         title = self.title

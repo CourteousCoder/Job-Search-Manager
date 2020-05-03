@@ -1,7 +1,7 @@
 from django.views.generic import ListView, CreateView, UpdateView, DetailView
 
-from contacts.forms import PersonForm
-from contacts.models import Person
+from contacts.forms import PersonForm, CompanyForm
+from contacts.models import Person, Company
 
 
 class PersonList(ListView):
@@ -20,3 +20,21 @@ class PersonCreate(CreateView):
 class PersonUpdate(UpdateView):
     form_class = PersonForm
     model = Person
+
+
+class CompanyList(ListView):
+    model = Company
+
+
+class CompanyDetail(DetailView):
+    model = Company
+
+
+class CompanyCreate(CreateView):
+    form_class = CompanyForm
+    model = Company
+
+
+class CompanyUpdate(UpdateView):
+    form_class = CompanyForm
+    model = Company

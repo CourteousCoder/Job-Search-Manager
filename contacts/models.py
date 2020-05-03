@@ -14,6 +14,9 @@ class Company(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def get_absolute_url(self):
+        return reverse('contacts:company_detail', kwargs=dict(pk=self.pk))
+
     def __str__(self):
         type = self.get_type_display()
         name = self.name

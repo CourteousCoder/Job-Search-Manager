@@ -1,0 +1,62 @@
+{% extends 'detail.html' %}
+{% block title %} {{ company }} | {{ block.super }}{% endblock %}
+{% block h2 %}
+    {{ company.name }}
+{% endblock h2 %}
+{% block pageactions %}
+    <a href="{% url 'contacts:company_update' company.pk %}" class="btn btn-primary">Edit Details</a>
+{% endblock pageactions %}
+{% block topsection %}
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label col-form-label-lg" for="company">Type</label>
+        <div class="col-sm-10">
+            <output class="form-control form-control-lg" id="name">{{ company.get_type_display }}</output>
+        </div>
+    </div>
+    {% if company.website %}
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label col-form-label-lg" for="website">Website</label>
+            <div class="col-sm-10">
+                <output class="form-control form-control-lg" id="website"><a href="{{ company.website }}">
+                    Click Here
+                </a></output>
+            </div>
+        </div>
+    {% endif %}
+{% endblock topsection %}
+{% block bottomsection %}
+    <div class="row">
+        <div class="col">
+            <h3>Contacts</h3>
+            <p>
+                <small>
+                    {{ company.person_set.all | length }} contact{{ company.person_set.all | length | pluralize }}
+                    so far
+                </small>
+            <ul>
+                {% for person in company.person_set.all %}
+                    <li>
+                        <a href="{{ person.get_absolute_url }}">{{ person.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col">
+            <h3>Jobs</h3>
+            <p>
+                <small>
+                    {{ company.job_set.all | length }} job{{ company.job_set.all | length | pluralize }} so far
+                </small>
+            <ul>
+                {% for job in company.job_set.all %}
+                    {% if job.is_being_pursued %}
+                        <li>
+                            <a href="{{ job.get_absolute_url }}"></a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+{% endblock bottomsection %}

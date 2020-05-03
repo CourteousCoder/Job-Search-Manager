@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Company(models.Model):
@@ -35,6 +36,9 @@ class Person(models.Model):
     @property
     def last_interaction(self):
         return self.interaction_set.latest()
+
+    def get_absolute_url(self):
+        return reverse('contacts:person_detail', kwargs=dict(pk=self.pk))
 
     def __str__(self):
         name = self.name

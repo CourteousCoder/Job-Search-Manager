@@ -7,64 +7,28 @@
     <a href="{% url 'contacts:person_update' person.pk %}" class="btn btn-primary">Edit Details</a>
 {% endblock pageactions %}
 {% block topsection %}
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label col-form-label-lg" for="company">Company</label>
-        <div class="col-sm-10">
-            <output class="form-control form-control-lg" id="company">
-                <a href="{{ person.company.get_absolute_url }}">
-                    {{ person.company }}
-                </a>
-            </output>
-        </div>
-    </div>
+    {% include 'detail_datum.inc.html' with label='Company' value=person.company href=person.company.get_absolute_url %}
 
     {% if person.phone_number %}
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label col-form-label-lg" for="phone">Phone Number</label>
-            <div class="col-sm-10">
-                <output class="form-control form-control-lg" id="phone"><a
-                        href="tel:{{ person.phone_number }}">{{ person.phone_number }}</a></output>
-            </div>
-        </div>
+        {% include 'detail_datum.inc.html' with label='Phone Number' value=person.phone_number protocol='tel' %}
     {% endif %}
 
     {% if person.email_address %}
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label col-form-label-lg" for="email">Email Address</label>
-            <div class="col-sm-10">
-
-                <output class="form-control form-control-lg" id="email"><a
-                        href="mailto:{{ person.email_address }}">{{ person.email_address }}</a></output>
-            </div>
-        </div>
+        {% include 'detail_datum.inc.html' with label='Email Address' value=person.email_address protocol='mailto' %}
     {% endif %}
+
     {% if person.linked_in_profile %}
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label col-form-label-lg" for="linkedin">LinkedIn Profile</label>
-            <div class="col-sm-10">
-                <output class="form-control form-control-lg" id="linkedin"><a href="{{ person.linked_in_profile }}">
-                    Click Here
-                </a></output>
-            </div>
-        </div>
+        {% include 'detail_datum.inc.html' with label="LinkedIn Profile" value=person.linked_in_profile href=person.linked_in_profile %}
     {% endif %}
 {% endblock topsection %}
 {% block bottomsection %}
     <h3>Interactions</h3>
     <p><small>{{ person.interaction_set.all | length }} interaction{{ person.interaction_set.all | length | pluralize }}
         so far</small></p>
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label col-form-label-lg" for="next-follow-up">Next Follow-up</label>
-        <div class="col-sm-10">
-            <output class="form-control form-control-lg" id="next-follow-up"><a
-                    href="{# TODO: new interaction #}">
-                {% if person.last_interaction.follow_up_at %}
-                    {{ person.last_interaction.follow_up_at | date:'r' }}
-                {% else %}
-                    Start an Interaction
-                {% endif %}
-            </a>
-            </output>
-        </div>
-    </div>
+    {# TODO: href new interaction #}
+    {% if person.last_interaction.follow_up_at %}
+        {% include 'detail_datum.inc.html' with label="Next Follow-Up" value=person.last_interaction.follow_up_at href='#' %}
+    {% else %}
+        {% include 'detail_datum.inc.html' with label="Next Follow-Up" value='Start an Interaction' href='#' %}
+    {% endif %}
 {% endblock %}

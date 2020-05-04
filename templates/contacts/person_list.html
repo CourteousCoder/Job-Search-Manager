@@ -23,8 +23,8 @@
             <td>{{ person.name }}</td>
             <td>{{ person.company }}</td>
             <td>{{ person.interaction_set.all | length }}</td>
-            <td>{{ person.last_interaction.created_at | date:'r' }}</td>
-            <td>{{ person.last_interaction.follow_up_at | date:'r' }}</td>
+            <td>{{ person.last_interaction.created_at }}</td>
+            <td>{{ person.last_interaction.follow_up_at }}</td>
         <tr/>
     {% endfor %}
 {% endblock tbody %}

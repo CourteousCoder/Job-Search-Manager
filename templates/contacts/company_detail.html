@@ -7,21 +7,10 @@
     <a href="{% url 'contacts:company_update' company.pk %}" class="btn btn-primary">Edit Details</a>
 {% endblock pageactions %}
 {% block topsection %}
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label col-form-label-lg" for="company">Type</label>
-        <div class="col-sm-10">
-            <output class="form-control form-control-lg" id="name">{{ company.get_type_display }}</output>
-        </div>
-    </div>
+    {% include 'detail_datum.inc.html' with label="Type" value=company.get_type_display %}
+
     {% if company.website %}
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label col-form-label-lg" for="website">Website</label>
-            <div class="col-sm-10">
-                <output class="form-control form-control-lg" id="website"><a href="{{ company.website }}">
-                    Click Here
-                </a></output>
-            </div>
-        </div>
+        {% include 'detail_datum.inc.html' with label="Website" value=company.website href=company.website %}
     {% endif %}
 {% endblock topsection %}
 {% block bottomsection %}

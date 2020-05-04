@@ -1,0 +1,18 @@
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label col-form-label-lg" for="company">{{ label }}</label>
+    <div class="col-sm-10">
+        <output class="form-control form-control-lg" id="{{ label }}">
+            {% if href %}
+                <a href="{{ href }}">
+                    {{ value }}
+                </a>
+            {% elif protocol %}
+                <a href="{{ protocol }}:{{ value }}">
+                    {{ value }}
+                </a>
+            {% else %}
+                {{ value }}
+            {% endif %}
+        </output>
+    </div>
+</div>

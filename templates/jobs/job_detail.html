@@ -1,0 +1,45 @@
+{% extends 'detail.html' %}
+{% block title %} {{ job }} | {{ block.super }}{% endblock %}
+{% block h2 %}
+    {{ job }}
+{% endblock h2 %}
+{% block pageactions %}
+    <a href="{% url 'jobs:job_update' job.pk %}" class="btn btn-primary">Edit Details</a>
+{% endblock pageactions %}
+{% block topsection %}
+    {% include 'detail_datum.inc.html' with label="Title" value=job.title %}
+    {% include 'detail_datum.inc.html' with label="Company" value=job.company href=job.company.get_absolute_url %}
+    {% include 'detail_datum.inc.html' with label="Status" value=job.get_status_display %}
+    {% include 'detail_datum.inc.html' with label="Description" value=job.description paragraph=True %}
+{% endblock topsection %}
+{% block bottomsection %}
+    <div class="row">
+        <div class="col-md-8">
+            <h3>Interactions</h3>
+            <p><small>{{ person.interaction_set.all | length }}
+                interaction{{ person.interaction_set.all | length | pluralize }}
+                so far</small></p>
+            {# TODO: href new interaction #}
+            {% if person.last_interaction.follow_up_at %}
+                {% include 'detail_datum.inc.html' with label="Next Follow-Up" value=person.last_interaction.follow_up_at href='#' %}
+            {% else %}
+                {% include 'detail_datum.inc.html' with label="Next Follow-Up" value='Start an Interaction' href='#' %}
+            {% endif %}
+        </div>
+        <div class="col">
+            <h3>Contacts</h3>
+            <p>
+                <small>
+                    {{ job.person_set.all | length }} contact{{ job.person_set.all | length | pluralize }}
+                    so far
+                </small>
+            <ul>
+                {% for person in job.person_set.all %}
+                    <li>
+                        <a href="{{ person.get_absolute_url }}">{{ person.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock bottomsection %}

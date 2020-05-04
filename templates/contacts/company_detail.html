@@ -40,7 +40,7 @@
                 {% for job in company.job_set.all %}
                     {% if job.is_being_pursued %}
                         <li>
-                            <a href="{{ job.get_absolute_url }}"></a>
+                            <a href="{{ job.get_absolute_url }}">{{ job.title }}</a>
                         </li>
                     {% endif %}
                 {% endfor %}

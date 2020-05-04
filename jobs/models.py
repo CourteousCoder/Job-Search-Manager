@@ -20,7 +20,12 @@ class Job(models.Model):
         (NEW, 'New Opportunity'),
         (APPLIED, 'Application Submitted'),
         (INTERVIEWING, 'Interviewing'),
-        (AWAITING_DECISION, 'Awaiting Decision')
+        (AWAITING_DECISION, 'Awaiting Decision'),
+        (NEGOTIATING_OFFER, 'Negotiating Offer'),
+        (ACCEPTED_OFFER, 'Accepted Offer'),
+        (DECLINED_OFFER, 'Declined Offer'),
+        (STOPPED_PURSUING, 'Stopped Pursuing'),
+        (REJECTED, 'Rejected'),
     ], null=False, blank=False, default=NEW)
 
     @property

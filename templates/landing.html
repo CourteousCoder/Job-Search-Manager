@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2><a href="{% url 'jobs:job_list' %}">Jobs</a></h2>
+    <h2><a href="{% url 'contacts:person_list' %}">Contacts</a></h2>
+    <h2><a href="{% url 'contacts:company_list' %}">Companies</a></h2>
+{% endblock content %}

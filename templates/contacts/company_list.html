@@ -1,0 +1,28 @@
+{% extends 'list.html' %}
+{% block title %}
+    Company Listing | {{ block.super }}
+{% endblock title %}
+{% block h2 %}
+    Companies
+{% endblock h2 %}
+{% block pageactions %}
+    <a href="{% url 'contacts:company_create' %}" class="btn btn-success">New Company</a>
+{% endblock pageactions %}
+{% block thead %}
+    <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Contacts</th>
+        <th>Jobs</th>
+    </tr>
+{% endblock thead %}
+{% block tbody %}
+    {% for company in company_list %}
+        <tr class="cursor" data-href="{% url 'contacts:company_detail' company.pk %}">
+            <td>{{ company.name }}</td>
+            <td>{{ company.get_type_display }}</td>
+            <td>{{ company.person_set.all | length }}</td>
+            <td>{{ company.job_set.all | length }}</td>
+        <tr/>
+    {% endfor %}
+{% endblock tbody %}

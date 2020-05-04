@@ -1,51 +1,30 @@
-{% extends 'base.html' %}
+{% extends 'list.html' %}
 {% block title %}
     Contact Listing | {{ block.super }}
-{% endblock %}
-{% block content %}
-    <div class="row">
-        <div class="col">
-            <h2>Contacts</h2>
-        </div>
-        <div class="">
-            <a href="{% url 'contacts:person_create' %}" class="btn btn-success">New Contact</a>
-        </div>
-    </div>
-
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Company</th>
-            <th>Interactions</th>
-            <th>Last Interaction</th>
-            <th>Next Follow-Up</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for person in person_list %}
-            <tr class="cursor" data-href="{% url 'contacts:person_detail' person.pk %}">
-                <td>{{ person.name }}</td>
-                <td>{{ person.company }}</td>
-                <td>{{ person.interaction_set.all | length }}</td>
-                <td>{{ person.last_interaction.created_at | date:'r' }}</td>
-                <td>{{ person.last_interaction.follow_up_at | date:'r' }}</td>
-            <tr/>
-        {% endfor %}
-        </tbody>
-    </table>
-{% endblock %}
-{% block scripts %}
-    {{ block.super }}
-    <script>
-        function setRowsClickable() {
-            $('.table  tbody  tr')
-                .click(event => window.location.href = $(event.target)
-                    .closest('tr')
-                    .data('href'));
-        }
-    </script>
-{% endblock %}
-{% block onload %}
-    setRowsClickable();
-{% endblock %}
+{% endblock title %}
+{% block h2 %}
+    Contacts
+{% endblock h2 %}
+{% block pageactions %}
+    <a href="{% url 'contacts:person_create' %}" class="btn btn-success">New Contact</a>
+{% endblock pageactions %}
+{% block thead %}
+    <tr>
+        <th>Name</th>
+        <th>Company</th>
+        <th>Interactions</th>
+        <th>Last Interaction</th>
+        <th>Next Follow-Up</th>
+    </tr>
+{% endblock thead %}
+{% block tbody %}
+    {% for person in person_list %}
+        <tr class="cursor" data-href="{% url 'contacts:person_detail' person.pk %}">
+            <td>{{ person.name }}</td>
+            <td>{{ person.company }}</td>
+            <td>{{ person.interaction_set.all | length }}</td>
+            <td>{{ person.last_interaction.created_at }}</td>
+            <td>{{ person.last_interaction.follow_up_at }}</td>
+        <tr/>
+    {% endfor %}
+{% endblock tbody %}

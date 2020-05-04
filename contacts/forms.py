@@ -1,6 +1,6 @@
 from django.forms import ModelForm, CharField, EmailField, URLField
 
-from contacts.models import Person
+from contacts.models import Company, Person
 
 
 class PersonForm(ModelForm):
@@ -17,3 +17,15 @@ class PersonForm(ModelForm):
     phone_number = CharField(required=False)
     email_address = EmailField(required=False)
     linked_in_profile = URLField(required=False)
+
+
+class CompanyForm(ModelForm):
+    class Meta:
+        model = Company
+        fields = (
+            'name',
+            'type',
+            'website',
+        )
+
+    website = URLField(required=False)

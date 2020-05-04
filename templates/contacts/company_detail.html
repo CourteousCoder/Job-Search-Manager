@@ -1,0 +1,51 @@
+{% extends 'detail.html' %}
+{% block title %} {{ company }} | {{ block.super }}{% endblock %}
+{% block h2 %}
+    {{ company.name }}
+{% endblock h2 %}
+{% block pageactions %}
+    <a href="{% url 'contacts:company_update' company.pk %}" class="btn btn-primary">Edit Details</a>
+{% endblock pageactions %}
+{% block topsection %}
+    {% include 'detail_datum.inc.html' with label="Type" value=company.get_type_display %}
+
+    {% if company.website %}
+        {% include 'detail_datum.inc.html' with label="Website" value=company.website href=company.website %}
+    {% endif %}
+{% endblock topsection %}
+{% block bottomsection %}
+    <div class="row">
+        <div class="col">
+            <h3>Contacts</h3>
+            <p>
+                <small>
+                    {{ company.person_set.all | length }} contact{{ company.person_set.all | length | pluralize }}
+                    so far
+                </small>
+            <ul>
+                {% for person in company.person_set.all %}
+                    <li>
+                        <a href="{{ person.get_absolute_url }}">{{ person.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col">
+            <h3>Jobs</h3>
+            <p>
+                <small>
+                    {{ company.job_set.all | length }} job{{ company.job_set.all | length | pluralize }} so far
+                </small>
+            <ul>
+                {% for job in company.job_set.all %}
+                    {% if job.is_being_pursued %}
+                        <li>
+                            <a href="{{ job.get_absolute_url }}"></a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+{% endblock bottomsection %}

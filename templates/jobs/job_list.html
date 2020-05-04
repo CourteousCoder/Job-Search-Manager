@@ -1,0 +1,30 @@
+{% extends 'list.html' %}
+{% block title %}
+    Job Listing | {{ block.super }}
+{% endblock title %}
+{% block h2 %}
+    Jobs
+{% endblock h2 %}
+{% block pageactions %}
+    <a href="{% url 'jobs:job_create' %}" class="btn btn-success">New Job</a>
+{% endblock pageactions %}
+{% block thead %}
+    <tr>
+        <th>Status</th>
+        <th>Title</th>
+        <th>Company</th>
+        <th>Contacts</th>
+        <th>Interactions</th>
+    </tr>
+{% endblock thead %}
+{% block tbody %}
+    {% for job in job_list %}
+        <tr class="cursor" data-href="{% url 'jobs:job_detail' job.pk %}">
+            <td>{{ job.get_status_display }}</td>
+            <td>{{ job.title }}</td>
+            <td>{{ job.company }}</td>
+            <td>{{ job.person_set.all | length }}</td>
+            <td>{{ job.interaction_set.all | length }}</td>
+        <tr/>
+    {% endfor %}
+{% endblock tbody %}

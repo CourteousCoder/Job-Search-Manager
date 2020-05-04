@@ -1,6 +1,5 @@
-from django.shortcuts import redirect
-from django.urls import reverse
+from django.shortcuts import render
 
 
 def landing(request):
-    return redirect(reverse('contacts:person_list'))
+    return render(request, 'landing.html')

@@ -1,0 +1,23 @@
+{% extends 'detail.html' %}
+{% block title %} {{ interaction }}  | {{ block.super }}{% endblock %}
+{% block h2 %}
+    Interaction on {{ interaction.created_at }}
+{% endblock h2 %}
+{% block pageactions %}
+    <a href="{% url 'contacts:interaction_update' interaction.pk %}" class="btn btn-primary">Edit Details</a>
+{% endblock pageactions %}
+{% block topsection %}
+    {% include 'detail_datum.inc.html' with label="Contact" value=interaction.person.name href=interaction.person.get_absolute_url %}
+    {% include 'detail_datum.inc.html' with label="Job" value=interaction.job href=interaction.company.get_absolute_url %}
+    {% include 'detail_datum.inc.html' with label="Notes" value=interaction.notes paragraph=True %}
+    {% include 'detail_datum.inc.html' with label="Next Follow-Up" value=interaction.follow_up_at %}
+{% endblock topsection %}
+{% block bottomsection %}
+    <div class="row">
+        <div>
+            <a href="{% url 'contacts:interaction_create' %}" class="btn btn-success">New
+                Interaction</a>
+        </div>
+
+    </div>
+{% endblock bottomsection %}

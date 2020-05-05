@@ -1,0 +1,15 @@
+{% for interaction in interactions %}
+    <div class="card m-5">
+
+        <div class="card-body bg-light">
+            <h5 class="card-title">{{ interaction.created_at }}</h5>
+            <p class="card-text">{{ interaction.notes }}</p>
+        </div>
+        <ul class="list-group list-group-flush bg-light">
+            <li class="list-group-item"><a href="{{ interaction.person.get_absolute_url }}"
+                                           class="card-link">{{ interaction.person.name }}</a></li>
+            <li class="list-group-item"><a href="{{ interaction.job.get_absolute_url }}"
+                                           class="card-link">{{ interaction.job }}</a></li>
+        </ul>
+    </div>
+{% endfor %}

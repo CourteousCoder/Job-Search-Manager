@@ -1,7 +1,7 @@
 from django.views.generic import ListView, CreateView, UpdateView, DetailView
 
 from contacts.forms import PersonForm, CompanyForm
-from contacts.models import Person, Company
+from contacts.models import Person, Company, Interaction
 
 
 class PersonList(ListView):
@@ -38,3 +38,27 @@ class CompanyCreate(CreateView):
 class CompanyUpdate(UpdateView):
     form_class = CompanyForm
     model = Company
+
+
+class InteractionDetail(DetailView):
+    model = Interaction
+
+
+class InteractionCreate(CreateView):
+    model = Interaction
+    fields = [
+        'person',
+        'job',
+        'notes',
+        'follow_up_at',
+    ]
+
+
+class InteractionUpdate(UpdateView):
+    model = Interaction
+    fields = [
+        'person',
+        'job',
+        'notes',
+        'follow_up_at',
+    ]

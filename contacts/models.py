@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 from django.urls import reverse
 
 
@@ -60,10 +61,13 @@ class Interaction(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def get_absolute_url(self):
+        return reverse('contacts:interaction_detail', kwargs=dict(pk=self.pk))
+
     def __str__(self):
         person = self.person
         job = self.job
-        time = self.created_at.isoformat()
+        time = self.created_at
         if person is not None and job is not None:
             return f'{time} - {person} about {job}'
         elif person is not None:

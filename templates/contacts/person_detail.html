@@ -22,13 +22,33 @@
     {% endif %}
 {% endblock topsection %}
 {% block bottomsection %}
-    <h3>Interactions</h3>
-    <p><small>{{ person.interaction_set.all | length }} interaction{{ person.interaction_set.all | length | pluralize }}
-        so far</small></p>
-    {# TODO: href new interaction #}
-    {% if person.last_interaction.follow_up_at %}
-        {% include 'detail_datum.inc.html' with label="Next Follow-Up" value=person.last_interaction.follow_up_at href='#' %}
-    {% else %}
-        {% include 'detail_datum.inc.html' with label="Next Follow-Up" value='Start an Interaction' href='#' %}
-    {% endif %}
+    <div class="row">
+        <div class="col-md-8">
+            <h3>Interactions</h3>
+            <p><small>{{ person.interaction_set.all | length }}
+                interaction{{ person.interaction_set.all | length | pluralize }}
+                so far</small></p>
+            {% if person.last_interaction.follow_up_at %}
+                {% include 'detail_datum.inc.html' with label="Next Follow-Up" value=person.last_interaction.follow_up_at href=person.last_interaction.get_absolute_url %}
+            {% else %}
+                {% include 'detail_datum.inc.html' with label="Next Follow-Up" value='Start an Interaction' route='contacts:interaction_create' %}
+            {% endif %}
+        </div>
+        <div class="col">
+            <h3>Jobs</h3>
+            <p>
+                <small>
+                    {{ person.jobs.distinct | length }} job{{ person.jobs.distinct | length | pluralize }}
+                    so far
+                </small>
+            <ul>
+                {% for job in person.jobs.distinct %}
+                    <li>
+                        <a href="{{ job.get_absolute_url }}">{{ job }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% include 'contacts/interaction_list.inc.html' with interactions=person.interaction_set.all %}
 {% endblock %}

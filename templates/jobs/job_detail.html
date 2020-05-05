@@ -19,22 +19,21 @@
             <p><small>{{ person.interaction_set.all | length }}
                 interaction{{ person.interaction_set.all | length | pluralize }}
                 so far</small></p>
-            {# TODO: href new interaction #}
             {% if person.last_interaction.follow_up_at %}
-                {% include 'detail_datum.inc.html' with label="Next Follow-Up" value=person.last_interaction.follow_up_at href='#' %}
+                {% include 'detail_datum.inc.html' with label="Next Follow-Up" value=person.last_interaction.follow_up_at href=person.last_interaction.get_absolute_url %}
             {% else %}
-                {% include 'detail_datum.inc.html' with label="Next Follow-Up" value='Start an Interaction' href='#' %}
+                {% include 'detail_datum.inc.html' with label="Next Follow-Up" value='Start an Interaction' route='contacts:interaction_create' %}
             {% endif %}
         </div>
         <div class="col">
             <h3>Contacts</h3>
             <p>
                 <small>
-                    {{ job.person_set.all | length }} contact{{ job.person_set.all | length | pluralize }}
+                    {{ job.person_set.distinct | length }} contact{{ job.person_set.distinct | length | pluralize }}
                     so far
                 </small>
             <ul>
-                {% for person in job.person_set.all %}
+                {% for person in job.person_set.distinct %}
                     <li>
                         <a href="{{ person.get_absolute_url }}">{{ person.name }}</a>
                     </li>
@@ -42,4 +41,5 @@
             </ul>
         </div>
     </div>
+    {% include 'contacts/interaction_list.inc.html' with interactions=job.interaction_set.all %}
 {% endblock bottomsection %}
